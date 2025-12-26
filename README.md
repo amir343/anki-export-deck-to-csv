@@ -49,6 +49,15 @@ Typical workflow:
 - edit `_addon/__init__.py`
 - restart Anki to test
 
+
+To download this add-on, please copy and paste the following code into Anki 2.1:
+
+2084240572
+
+Your comments and suggestions for improvement are welcome.
 ## License
 
 MIT
+
+
+
