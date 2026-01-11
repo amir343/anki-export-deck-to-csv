@@ -1,4 +1,5 @@
 import csv
+from collections import defaultdict
 from datetime import datetime
 
 from aqt import mw
@@ -45,20 +46,20 @@ def export_single_deck_to_csv():
         QMessageBox.information(mw, "Export Deck", f"No notes found in deck:\n{deck_name}")
         return
 
-    # Gather notes and union of field names across note types in that deck
-    notes = []
-    field_names = set()
-
-    for nid in note_ids:
-        note = col.get_note(nid)
-        notes.append(note)
-        field_names.update(note.keys())
-
-    field_names = sorted(field_names)
-
-    header = ["deck", "note_id", "date_added"] + field_names + ["tags"]
-
     try:
+        # Gather notes and union of field names across note types in that deck
+        notes = []
+        field_names = []
+
+        for nid in note_ids:
+            note = col.get_note(nid)
+            notes.append(note)
+            field_names.extend(note.keys())
+
+        field_names = list(dict.fromkeys(field_names))
+
+        header = ["deck", "note_id", "date_added"] + field_names + ["Tags"]
+
         with open(path, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(header)
